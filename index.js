@@ -5,8 +5,7 @@
 const functions = require('firebase-functions');
 const {WebhookClient} = require('dialogflow-fulfillment');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
-
-var xhttp = new XMLHttpRequest();
+const axios = require('axios');
  
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
  
@@ -24,12 +23,12 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     agent.add(`I'm sorry, can you try again?`);
   }
   
-  function test(agent) {
-      xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-              agent.add(xhttp.responseText);
-          }
-      };
+  function test(agent){
+    let url = 'https://rocket-elevators-cm.azurewebsites.net/api/Elevators';
+    return axios.get(url).then(elevators => {
+      agent.add(`Greetings`);
+      agent.add(`${elevators.data.length}`);
+    });
   }
 
   // // Uncomment and edit to make your own intent handler
