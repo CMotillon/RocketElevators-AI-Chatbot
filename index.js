@@ -24,9 +24,12 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   }
   
   function test(agent){
-    return axios.get('https://rocket-elevators-cm.azurewebsites.net/api/Elevators').then(response => {
-      agent.add(`${JSON.stringify(response.data[0].status)}`);
+    var nb_elevators = 0;
+    axios.get('https://rocket-elevators-cm.azurewebsites.net/api/Elevators').then(response => {
+      nb_elevators = response.data.length;
     });
+    
+    agent.add(`There are currently ${nb_elevators} deployed in the XXX buildings of your XXX customers.`);
   }
 
   // // Uncomment and edit to make your own intent handler
