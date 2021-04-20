@@ -24,10 +24,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   }
   
   function test(agent){
-    let url = 'https://rocket-elevators-cm.azurewebsites.net/api/Elevators';
-    return axios.get(url).then(elevators => {
-      agent.add(`Greetings`);
-      agent.add(`${elevators.data.length}`);
+    return axios.get('https://rocket-elevators-cm.azurewebsites.net/api/Elevators').then(response => {
+      agent.add(`${JSON.stringify(response.data[0].status)}`);
     });
   }
 
