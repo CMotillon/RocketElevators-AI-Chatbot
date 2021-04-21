@@ -15,21 +15,24 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
  
   function welcome(agent) {
-    agent.add(`Welcome to my agent!`);
+    return axios.all([
+      axios.get('https://rocket-elevators-cm.azurewebsites.net/api/Elevators'),
+      axios.get('https://rocket-elevators-cm.azurewebsites.net/api/Buildings'),
+      axios.get('https://rocket-elevators-cm.azurewebsites.net/api/Buildings/Customers'),
+      axios.get('https://rocket-elevators-cm.azurewebsites.net/api/Buildings/Quotes')
+    ]).then(responseArr => {
+      const nb_elevators = responseArr[0].data.length;
+      const nb_buildings = responseArr[1].data.length;
+      const nb_customers = responseArr[2].data.length;
+      const nb_quotes = responseArr[3].data.length;
+
+      agent.add(`Greetings. There are currently ${nb_elevators} deployed in the ${nb_buildings} buildings of your ${nb_customers} customers. On another note you currently have ${nb_quotes} quotes awaiting processing.`);
+    });
   }
  
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
-  }
-  
-  function test(agent){
-    var nb_elevators = 0;
-    axios.get('https://rocket-elevators-cm.azurewebsites.net/api/Elevators').then(response => {
-      nb_elevators = response.data.length;
-    });
-    
-    agent.add(`There are currently ${nb_elevators} deployed in the XXX buildings of your XXX customers.`);
   }
 
   // // Uncomment and edit to make your own intent handler
@@ -65,7 +68,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
-  intentMap.set('Test Intent', test);
   // intentMap.set('your intent name here', yourFunctionHandler);
   // intentMap.set('your intent name here', googleAssistantHandler);
   agent.handleRequest(intentMap);
