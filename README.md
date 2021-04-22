@@ -7,3 +7,8 @@
     <li><a href="https://cobusgreyling.medium.com/how-to-create-a-chatbot-with-google-dialogflow-60616c2b802f"> How To Create A Chatbot With Google Dialogflow </a></li>
     <li><a href="https://cloud.google.com/architecture/building-and-deploying-chatbot-dialogflow"> Building and deploying a chatbot by using Dialogflow (overview) </a></li>
 </ul>
+
+For the controller status intent:
+![alt text](./README_images/Screenshot_1.png)
+![alt text](./README_images/Screenshot_2.png)
+![alt text](./README_images/Screenshot_3.png)
