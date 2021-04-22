@@ -8,6 +8,8 @@
     <li><a href="https://cloud.google.com/architecture/building-and-deploying-chatbot-dialogflow"> Building and deploying a chatbot by using Dialogflow (overview) </a></li>
 </ul>
 
+Go to https://dialogflow.cloud.google.com/
+
 For the controller status intent:
 ![alt text](./README_images/Screenshot_1.png)
 ![alt text](./README_images/Screenshot_2.png)
